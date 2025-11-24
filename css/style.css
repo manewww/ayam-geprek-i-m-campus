@@ -87,7 +87,7 @@ body {
   display: none;
 }
 
-/* shopping cart */
+/* shopping cart button badge */
 #shopping-cart-button {
   position: relative;
 }
@@ -105,20 +105,19 @@ body {
 }
 
 /* =========================================
-   SHOPPING CART DRAWER — FINAL FIX
+   SHOPPING CART DRAWER (BASE)
    ========================================= */
-
 .shopping-cart {
   position: fixed;
   top: 0;
   right: -120%;
-  width: 26rem; /* pas, ga kegedean */
+  width: 26rem;
   max-width: 90vw;
   height: 100vh;
   background: #fff;
   padding: 1.4rem;
   overflow-y: auto;
-  overflow-x: hidden; /* ga ada scroll samping */
+  overflow-x: hidden;
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
   border-left: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 1.2rem 0 0 1.2rem;
@@ -127,18 +126,16 @@ body {
 }
 
 .shopping-cart.active {
-  right: 0 !important; /* PAKSA nempel kanan */
+  right: 0 !important;
 }
 
-/* =========================================
-   CART ITEM
-   ========================================= */
+/* cart item */
 .shopping-cart .cart-item {
   display: flex;
   gap: 1rem;
   padding: 1rem 0;
   border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
-  align-items: flex-start; /* biar teks punya ruang */
+  align-items: center;
 }
 
 .shopping-cart .cart-item:last-child {
@@ -151,6 +148,7 @@ body {
   object-fit: cover;
   border-radius: 0.8rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
 }
 
 /* detail */
@@ -164,28 +162,25 @@ body {
   margin: 0 0 0.4rem 0;
   font-weight: 700;
   color: #222;
+  word-break: break-word;
+  line-height: 1.25;
 }
 
-/* =========================================
-   ITEM PRICE ROW (ANTI-CLIP)
-   ========================================= */
+/* item price row */
 .shopping-cart .item-price {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  flex-wrap: wrap !important; /* boleh turun baris */
-  white-space: normal !important; /* hapus nowrap lama */
+  flex-wrap: nowrap;
   font-size: 1.15rem;
   color: #444;
 }
 
-/* harga satuan */
 .shopping-cart .item-price span:first-child {
   font-weight: 700;
   color: #111;
 }
 
-/* quantity number */
 .shopping-cart .item-price span[x-text="item.quantity"] {
   min-width: 18px;
   text-align: center;
@@ -193,7 +188,7 @@ body {
   color: #111;
 }
 
-/* total per item (merah) selalu turun rapi */
+/* total per item */
 .shopping-cart .item-price span:last-child {
   width: 100%;
   text-align: right;
@@ -202,15 +197,12 @@ body {
   margin-top: 0.2rem;
 }
 
-/* =========================================
-   BUTTON + / -
-   ========================================= */
+/* button +/- */
 .shopping-cart button#add,
 .shopping-cart button#remove {
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  border: none;
   background: #f1f1f1;
   color: #111;
   font-weight: 800;
@@ -219,6 +211,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .shopping-cart button#add:hover {
@@ -233,15 +226,12 @@ body {
   transform: translateY(-1px);
 }
 
-/* =========================================
-   EMPTY + TOTAL TEXT
-   ========================================= */
-/* === BESARIN TEKS "KERANJANG KOSONG" === */
+/* empty + total text */
 .shopping-cart h4.empty {
-  font-size: clamp(1.8rem, 3vw, 2.2rem); /* lebih gede dari h4 biasa */
+  font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
-  margin-top: 1.2rem !important; /* override inline margin-top */
+  margin-top: 1.2rem !important;
   opacity: 0.9;
   background: #f7f7f7;
   padding: 0.8rem 1rem;
@@ -257,9 +247,7 @@ body {
   color: #e72f17;
 }
 
-/* =========================================
-   CHECKOUT FORM (COMPACT & CLEAN)
-   ========================================= */
+/* checkout form */
 .form-container {
   margin-top: 1.5rem;
   padding-top: 1.2rem;
@@ -342,35 +330,21 @@ body {
 }
 
 /* =========================================
-   RESPONSIVE HP
+   BACKDROP CART
    ========================================= */
-@media (max-width: 500px) {
-  .shopping-cart {
-    width: 70vw;
-    max-width: 320px;
-    right: -100%;
-    height: 100vh;
-    padding: 1rem;
-    border-radius: 1rem 0 0 1rem;
-  }
+.cart-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 9997;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
 
-  .shopping-cart.active {
-    right: 0 !important;
-  }
-
-  .shopping-cart .cart-item img {
-    width: 56px;
-    height: 56px;
-  }
-
-  .shopping-cart .item-price {
-    font-size: 1.05rem;
-    gap: 0.35rem;
-  }
-
-  .checkout-button {
-    font-size: 1.2rem;
-  }
+.cart-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Hero Section */
@@ -392,14 +366,14 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    /* gradient dari bawah */ linear-gradient(
+  background: linear-gradient(
     0deg,
     rgba(255, 255, 255, 0.5) 10%,
     rgba(255, 255, 255, 0) 30%
   );
   pointer-events: none;
 }
+
 .hero .content {
   padding: 1.4rem 7%;
   max-width: 60rem;
@@ -435,9 +409,6 @@ body {
   background-color: #e72f17;
   border-radius: 0.5rem;
   box-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
-}
-
-.hero .content .cta {
   transition: transform 0.1s ease, filter 0.1s ease, box-shadow 0.1s ease;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.18);
   position: relative;
@@ -456,7 +427,6 @@ body {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
 }
 
-/* ripple tanpa JS */
 .hero .content .cta::after {
   content: "";
   position: absolute;
@@ -501,7 +471,7 @@ body {
   margin-bottom: 3rem;
   color: #e72f17;
   border-bottom: 2px solid #f3311f;
-  display: inline-block; /* biar garisnya sepanjang teks aja */
+  display: inline-block;
   padding-bottom: 4px;
   left: 50%;
   position: relative;
@@ -577,7 +547,6 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Efek saat di-hover */
 .menu-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -614,8 +583,6 @@ body {
 }
 
 /* Contact Section */
-
-/* --- Desktop default: sejajar 2 kolom --- */
 .contact .row {
   display: flex;
   flex-direction: row;
@@ -623,7 +590,7 @@ body {
   justify-content: center;
   gap: 2rem;
   margin-top: 3rem;
-  flex-wrap: nowrap; /* penting! jangan wrap di desktop */
+  flex-wrap: nowrap;
 }
 
 .contact-info.alt-card {
@@ -648,11 +615,10 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
-/* rapihin teks di dalam card (terutama alamat) */
 .contact-info .card p {
-  text-align: left; /* jangan center */
-  line-height: 1.6; /* biar jarak antar baris enak */
-  word-break: break-word; /* kalau kepanjangan tetep rapi */
+  text-align: left;
+  line-height: 1.6;
+  word-break: break-word;
 }
 
 .contact-info.alt-card .btn {
@@ -660,7 +626,7 @@ body {
   padding: 1rem 2.5rem;
   margin-top: 0.8rem;
   border-radius: 0.8rem;
-  align-self: flex-start; /* nempel kiri */
+  align-self: flex-start;
 }
 
 .contact-info.alt-card .card i {
@@ -671,7 +637,7 @@ body {
 }
 
 .contact-info.alt-card h3 {
-  font-size: 2.4rem; /* naikin dari 2rem */
+  font-size: 2.4rem;
   font-weight: 800;
   margin-bottom: 1rem;
   text-align: center;
@@ -689,12 +655,10 @@ body {
   line-height: 1.4;
 }
 
-/* 2. Jam operasional tetap satu card kayak lain */
 .contact-info.alt-card .hours-card {
-  flex-direction: row; /* sama kayak card lain */
+  flex-direction: row;
 }
 
-/* biar badge jam rapi */
 .contact-info.alt-card .hours-badges {
   display: flex;
   flex-wrap: wrap;
@@ -702,7 +666,6 @@ body {
   margin-top: 0.4rem;
 }
 
-/* style badge (tetap khas jam operasional) */
 .contact-info.alt-card .hours-badge {
   display: inline-block;
   padding: 0.35rem 0.8rem;
@@ -718,7 +681,6 @@ body {
   color: #c62828;
 }
 
-/* MAP */
 .contact .row .map {
   flex: 1 1 45%;
   width: 100%;
@@ -728,7 +690,6 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* FORM */
 .contact .row form {
   flex: 1 1 45%;
   background-color: #fff;
@@ -774,7 +735,7 @@ body {
   background-color: #c62828;
 }
 
-/* --- Responsive: Tablet & HP → jadi 1 kolom --- */
+/* responsive contact */
 @media (max-width: 992px) {
   .contact .row {
     flex-direction: column;
@@ -788,7 +749,7 @@ body {
   }
 }
 
-/* Footer */
+/* footer */
 footer {
   background-color: #f8f5cae1;
   text-align: center;
@@ -892,205 +853,233 @@ footer .links a {
   html {
     font-size: 55%;
   }
+
+  /* hero lebih pendek di HP */
+  .hero {
+    min-height: 75vh;
+    background-position: center top;
+  }
+
+  .hero .content {
+    padding-top: 6rem;
+  }
+
+  /* menu 2 kolom di HP */
+  .menu-container {
+    gap: 18px;
+    margin-top: 35px;
+  }
+  .menu-card {
+    width: 46%;
+  }
 }
 
-/* =========================================
-   RESPONSIVE SCALING SHOPPING CART (AUTO)
-   dari layar besar -> hp
-   tempel di PALING BAWAH style.css
-   ========================================= */
-
-/* ukuran dasar cart & teksnya ikut layar */
-.shopping-cart {
-  font-size: clamp(1.3rem, 2.2vw, 1.7rem); /* min, fleksibel, max */
-}
-
-/* judul cart */
-.shopping-cart h3,
-.shopping-cart h4 {
-  font-size: clamp(1.5rem, 2.6vw, 1.9rem);
-  margin-bottom: 0.8rem;
-}
-
-/* item cart lebih lega */
-.shopping-cart .cart-item {
-  padding: clamp(0.7rem, 1.5vw, 1.1rem) 0;
-  gap: clamp(0.6rem, 1.2vw, 1rem);
-}
-
-/* gambar item ikut skala layar */
-.shopping-cart img {
-  width: clamp(55px, 14vw, 80px);
-  height: clamp(55px, 14vw, 80px);
-  object-fit: cover;
-  border-radius: 0.6rem;
-}
-
-/* nama produk */
-.shopping-cart .item-detail h3 {
-  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
-}
-
-/* harga */
-.shopping-cart .item-price {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-}
-
-/* tombol +/- biar gampang dipencet di hp */
-.shopping-cart .item-quantity button {
-  width: clamp(24px, 6.5vw, 32px);
-  height: clamp(24px, 6.5vw, 32px);
-  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
-}
-
-/* angka quantity */
-.shopping-cart .item-quantity span {
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
-}
-
-/* total & tombol checkout */
-.shopping-cart .cart-total {
-  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
-  margin-top: 1rem;
-}
-
-.shopping-cart .checkout-button {
-  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
-  padding: clamp(0.7rem, 2vw, 1rem) clamp(1rem, 3vw, 1.6rem);
-  border-radius: 0.7rem;
-}
-
+/* MAP jadi persegi di HP */
 @media (max-width: 490px) {
   .contact .row .map {
     width: 100%;
-    height: 300px; /* fallback persegi kira2 */
+    aspect-ratio: 1 / 1;
+    height: auto;
     min-height: unset;
   }
 }
 
-/* backdrop gelap saat cart aktif */
-.cart-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 9997;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.2s;
-}
-.cart-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
+/* =========================================
+   FINAL CART RESPONSIVE (AUTO)
+   Desktop normal, HP tetap rapi
+   ========================================= */
+
+/* scale teks/gambar otomatis */
+.shopping-cart {
+  font-size: clamp(1.25rem, 1.2vw, 1.45rem);
+  padding: clamp(1rem, 1.5vw, 1.4rem);
 }
 
-/* cart sedikit turun supaya navbar kelihatan */
-@media (max-width: 510px) {
+.shopping-cart .cart-item {
+  gap: clamp(0.7rem, 1.5vw, 1rem);
+  padding: clamp(0.7rem, 1.2vw, 1rem) 0;
+}
+
+.shopping-cart .cart-item img {
+  width: clamp(55px, 9vw, 75px);
+  height: clamp(55px, 9vw, 75px);
+}
+
+/* nama produk */
+.shopping-cart .item-detail h3 {
+  font-size: clamp(1.25rem, 1.4vw, 1.55rem);
+}
+
+/* harga */
+.shopping-cart .item-price {
+  font-size: clamp(1.15rem, 1.3vw, 1.45rem);
+}
+
+/* tombol +/- */
+.shopping-cart button#add,
+.shopping-cart button#remove {
+  width: clamp(24px, 5.5vw, 30px);
+  height: clamp(24px, 5.5vw, 30px);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+/* quantity */
+.shopping-cart .item-price span[x-text="item.quantity"] {
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+}
+
+/* total */
+.shopping-cart h4.total {
+  font-size: clamp(1.25rem, 1.5vw, 1.6rem);
+}
+
+/* empty text */
+.shopping-cart h4.empty {
+  font-size: clamp(1.4rem, 1.6vw, 1.7rem);
+}
+
+/* form checkout */
+.shopping-cart .form-container h5 {
+  font-size: clamp(1.3rem, 1.6vw, 1.6rem);
+}
+
+.shopping-cart .form-container label span {
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+}
+
+.shopping-cart .form-container input {
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+}
+
+/* tombol checkout */
+.shopping-cart .checkout-button {
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  padding: 0.9rem 1.2rem;
+}
+
+/* HP: drawer pas & gak maju */
+@media (max-width: 480px) {
   .shopping-cart {
-    top: 45px;
+    width: 82vw;
+    max-width: 340px;
+    right: -100%;
+    top: 45px; /* biar navbar kelihatan */
     height: calc(100vh - 45px);
+  }
+  .shopping-cart.active {
+    right: 0 !important;
   }
 }
 
 /* =========================================
-   CART HP: BESARIN SEMUA ISI + KURANGI SPACE KOSONG
+   PATCH FIX CART (DESKTOP + HP)
+   tempel PALING BAWAH
    ========================================= */
-@media (max-width: 510px) {
-  /* cartnya sedikit dilebarin biar ga kosong */
+
+/* 1) FIX DESKTOP: harga/total item gak hilang */
+.shopping-cart .item-price {
+  flex-wrap: wrap !important; /* boleh turun baris */
+  white-space: normal !important;
+}
+
+/* total merah per item turun rapi di baris sendiri */
+.shopping-cart .item-price span:last-child {
+  flex-basis: 100%; /* ganti width:100% biar gak ngeclip */
+  width: auto !important;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* 2) FIX HP: cart selalu nempel kanan, gak “maju ke kiri” */
+@media (max-width: 576px) {
   .shopping-cart {
-    width: 88vw; /* dulu 80vw */
-    max-width: 360px;
-    padding: 1.4rem; /* agak lega biar isi enak */
-    font-size: 1.8rem; /* INI KUNCI: semua teks ikut membesar */
+    width: min(340px, 88vw);
+    right: -100%;
+    left: auto !important; /* paksa jangan ngambil kiri */
+  }
+  .shopping-cart.active {
+    right: 0 !important;
+    left: auto !important;
   }
 
-  /* item cart */
-  .shopping-cart .cart-item {
-    gap: 1.3rem;
-    padding: 1.2rem 0;
-    align-items: center;
-  }
-
-  .shopping-cart .cart-item img {
-    width: 90px;
-    height: 90px;
-    border-radius: 1rem;
-  }
-
-  .shopping-cart .item-detail h3 {
-    font-size: 1.9rem;
-    line-height: 1.25;
-  }
-
+  /* di HP biar tombol +/- tetap di baris atas */
   .shopping-cart .item-price {
-    font-size: 1.7rem;
-    gap: 0.7rem;
+    flex-wrap: nowrap !important; /* khusus HP tetep satu baris */
   }
-
-  /* tombol + - */
-  .shopping-cart button#add,
-  .shopping-cart button#remove {
-    width: 34px;
-    height: 34px;
-    font-size: 2rem;
-  }
-
-  .shopping-cart .item-price span[x-text="item.quantity"] {
-    font-size: 1.7rem;
-    min-width: 24px;
-    text-align: center;
-  }
-
-  /* total & teks lain */
-  .shopping-cart h4,
-  .shopping-cart h5 {
-    font-size: 1.85rem;
-  }
-
-  /* form checkout: label + input */
-  .shopping-cart .form-container label {
-    font-size: 1.65rem;
-  }
-
-  .shopping-cart .form-container input {
-    font-size: 1.65rem;
-    padding: 0.9rem 1rem;
-    border-radius: 0.7rem;
-  }
-
-  /* tombol checkout */
-  .shopping-cart .checkout-button {
-    font-size: 1.8rem;
-    padding: 1.1rem 1.6rem;
-    border-radius: 0.9rem;
+  .shopping-cart .item-price span:last-child {
+    flex-basis: 100%;
+    flex-wrap: wrap !important; /* tapi total merah tetap turun */
   }
 }
 
-/* === BESARIN BAGIAN CUSTOMER DETAIL DI CART (HP) === */
-@media (max-width: 510px) {
-  /* judul "Customer Detail" */
-  .shopping-cart .form-container h5 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
+/* === FIX HARGA HILANG DI HP KECIL === */
+@media (max-width: 480px) {
+  .shopping-cart .item-price {
+    flex-wrap: wrap !important; /* boleh turun baris */
+    white-space: normal !important; /* jangan dipaksa 1 baris */
+    gap: 0.35rem;
   }
 
-  /* teks label: Nama, Alamat, No.Handphone */
-  .shopping-cart .form-container label span {
-    display: block;
-    font-size: 1.7rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
+  /* harga merah (= total item) turun baris sendiri dan pasti kelihatan */
+  .shopping-cart .item-price span:last-child {
+    flex-basis: 100%;
+    width: auto !important;
+    text-align: right;
+    margin-top: 0.25rem;
   }
+}
 
-  /* inputnya juga dibesarin */
-  .shopping-cart .form-container input {
-    font-size: 1.7rem;
-    padding: 1rem 1.1rem;
-    border-radius: 0.8rem;
+/* === HP KECIL: CART JANGAN TERLALU MAJU KE KIRI === */
+@media (max-width: 480px) {
+  .shopping-cart {
+    width: 76vw; /* kecilin dikit biar gak maju */
+    max-width: 300px;
+    right: -100% !important;
+    left: auto !important;
   }
+  .shopping-cart.active {
+    right: 0 !important;
+    left: auto !important;
+  }
+}
 
-  /* spacing antar field lebih lega */
-  .shopping-cart .form-container label {
-    margin-bottom: 1.1rem;
+/* ekstra ketat buat 320px */
+@media (max-width: 360px) {
+  .shopping-cart {
+    width: 70vw;
+    max-width: 270px;
   }
+}
+
+/* ===== BIKIN MENU CARD SEJAJAR ===== */
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* area teks (judul+harga) dikasih tinggi tetap */
+.menu-card-title {
+  min-height: 3.2rem; /* cukup untuk 2 baris */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 8px;
+}
+
+/* harga juga dibikin konsisten jaraknya */
+.menu-card p {
+  min-height: 1.8rem;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* tombol biar selalu di bawah dan sejajar */
+.menu-card .add-cart {
+  margin-top: auto; /* dorong tombol ke bawah card */
+  width: 40%;
+  justify-content: center;
 }
