@@ -1083,3 +1083,39 @@ footer .links a {
   width: 40%;
   justify-content: center;
 }
+
+/* === HP: BESARIN ISI CART DIKIT + TOTAL LEBIH JELAS === */
+@media (max-width: 576px) {
+  /* naikin semua teks di dalam cart sedikit */
+  .shopping-cart {
+    font-size: 1.7rem; /* sebelumnya kira2 1.45–1.5 */
+  }
+
+  /* teks item */
+  .shopping-cart .item-detail h3 {
+    font-size: 1.75rem;
+  }
+
+  .shopping-cart .item-price {
+    font-size: 1.5rem;
+  }
+
+  /* label & input form checkout ikut naik tipis */
+  .shopping-cart .form-container label span {
+    font-size: 1.45rem;
+  }
+
+  .shopping-cart .form-container input {
+    font-size: 1.45rem;
+  }
+
+  /* TOTAL dibuat lebih besar & tegas */
+  .shopping-cart h4.total {
+    font-size: 1.9rem;
+    font-weight: 900;
+  }
+  .shopping-cart h4.total span {
+    font-size: 1.95rem; /* angka total merahnya */
+    font-weight: 900;
+  }
+}
