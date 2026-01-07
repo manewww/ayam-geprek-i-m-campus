@@ -108,7 +108,7 @@ checkoutButton.addEventListener("click", function (e) {
 
 // format pesan whatsapp
 const formatMessage = (obj) => {
-  return `Halo Kak Saya Mau Pesan Ayam Geprek 😄
+  return `Halo Kak Saya Mau Pesan Ayam Geprek...
   Data Pembeli
     Nama: ${obj.name}
     Alamat: ${obj.adress}
@@ -130,6 +130,7 @@ const rupiah = (number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
 
 
 
