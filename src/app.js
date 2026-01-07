@@ -103,7 +103,7 @@ checkoutButton.addEventListener("click", function (e) {
   const data = new URLSearchParams(formData);
   const objData = Object.fromEntries(data);
   const message = formatMessage(objData);
-  window.open("http://wa.me/6289529425164?text=" + encodeURIComponent(message));
+  window.open("https://wa.me/6289529425164?text=Halo%20kak,%20saya%20mau%20tanya/pesan%20Ayam%20Geprek" + encodeURIComponent(message));
 });
 
 // format pesan whatsapp
@@ -129,4 +129,5 @@ const rupiah = (number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
 
