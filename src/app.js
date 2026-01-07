@@ -103,12 +103,13 @@ checkoutButton.addEventListener("click", function (e) {
   const data = new URLSearchParams(formData);
   const objData = Object.fromEntries(data);
   const message = formatMessage(objData);
-  window.open("https://wa.me/6289529425164?text=Halo%20kak,%20saya%20mau%20tanya/pesan%20Ayam%20Geprek" + encodeURIComponent(message));
+  window.open("https://wa.me/6289529425164?text=" + encodeURIComponent(message));
 });
 
 // format pesan whatsapp
 const formatMessage = (obj) => {
-  return `Data Pembeli
+  return `Halo Kak Saya Mau Pesan Ayam Geprek 😄
+  Data Pembeli
     Nama: ${obj.name}
     Alamat: ${obj.adress}
     No Handphone: ${obj.phone}
@@ -129,5 +130,6 @@ const rupiah = (number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
 
 
